@@ -4,11 +4,19 @@ export default class AudioStore {
   constructor(rootStore) {
     makeAutoObservable(this);
     this.rootStore = rootStore;
+    this.initAudioObject();
   }
 
   url;
   objectURL;
-  audioElement = new Audio();
+  audioElement;
+
+  initAudioObject() {
+    this.audioElement = new Audio();
+    this.audioElement.addEventListener('ended', () => {
+      this.playing = false;
+    })
+  }
 
   async init(url) {
     this.url = url;
