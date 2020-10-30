@@ -1,13 +1,67 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  background-color: cornsilk;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+#root {
+  width: 100%;
+  height: 100%;
+  max-width: 360px;
+}
+
+.top {
+  position: relative;
+  width: 100%;
+  height: 48px;
+  border-bottom: 1px black dotted;
+}
+
+.route_up {
+  position: absolute;
+  width: 48px;
+  height: 24px;
+  top: 12px;
+  left: 0;
+}
+
+.route_down {
+  position: absolute;
+  width: 48px;
+  height: 24px;
+  top: 12px;
+  right: 0;
+}
+
+.cards {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  /* background-color: brown; */
+}
+
+.card {
+  width: 96px;
+  height: 96px;
+  margin: 3px;
+  background-color: darkcyan;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+}
+
+.items {}
+
+.item {
+  width: 100%;
+  height: 36px;
+  background-color: whitesmoke;
+  margin-top: 2px;
+  margin-bottom: 2px;
 }
