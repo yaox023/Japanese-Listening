@@ -1,0 +1,116 @@
+/* Basic */
+
+body {
+  margin: 0;
+  background-color: lightblue;
+}
+
+#root {
+  /* background-color: rgb(196, 196, 196); */
+  width: 100%;
+  max-width: 425px;
+  height: 100vh;
+  margin: 0 auto;
+
+  background-color: white;
+
+  --nav-h: 60px;
+  --settings-h: 90px;
+  --progress-bar-h: 60px;
+  --control-h: 90px;
+}
+
+.nav-container {
+  background-color: lightgray;
+
+  height: var(--nav-h);
+  font-size: 16px;
+
+  display: grid;
+  grid-template-columns: 64px auto 64px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-before {
+  background-color: black;
+  width: 100%;
+  height: 100%;
+}
+
+.nav-after {
+  background-color: black;
+  width: 100%;
+  height: 100%;
+}
+
+.cover-container {
+  background-color: rgb(96, 238, 103);
+
+  width: 100%;
+  height: calc(100% - var(--nav-h) - var(--settings-h) - var(--progress-bar-h) - var(--control-h));
+  max-height: calc(720px - var(--nav-h) - var(--settings-h) - var(--progress-bar-h) - var(--control-h));
+}
+
+.settings-container {
+  background-color: cornflowerblue;
+
+  width: 100%;
+  height: var(--settings-h);
+
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.settings-play-mode {
+  background-color: rgb(241, 190, 233);
+}
+
+.settings-volume {
+  background-color: rgb(241, 200, 233);
+}
+
+.settings-playback-rate {
+  background-color: rgb(241, 210, 233);
+}
+
+.settings-music-list {
+  background-color: rgb(241, 220, 233);
+}
+
+.progress-bar-container {
+  background-color: cornflowerblue;
+
+  width: 100%;
+  height: var(--progress-bar-h);
+}
+
+.control-container {
+  background-color: cadetblue;
+
+  width: 100%;
+  height: var(--control-h);
+
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.skip-pre {
+  background-color: rgb(252, 250, 246);
+}
+
+.seek-backward {
+  background-color: rgb(252, 240, 246);
+}
+
+.play-pause {
+  background-color: rgb(252, 230, 246);
+}
+
+.seek-forward {
+  background-color: rgb(252, 220, 246);
+}
+
+.skip-next{
+  background-color: rgb(252, 210, 246);
+}

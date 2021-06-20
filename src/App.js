@@ -5,16 +5,132 @@ import { Context, PAGE } from "./constants";
 import AudioContainer from "./components/AudioContainer";
 import CardContainer from "./components/CardContainer";
 import ItemContainer from "./components/ItemContainer";
-import Top from "./components/Top";
+import TopContainer from "./components/TopContainer";
+
+
+import IconButton from '@material-ui/core/IconButton';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+
+import SkipNextRoundedIcon from '@material-ui/icons/SkipNextRounded';
+import SkipPreviousRoundedIcon from '@material-ui/icons/SkipPreviousRounded';
+// import IconButton from '@material-ui/core/IconButton';
+
+// const NavContainer = () => {
+//   return <div className="nav-container">
+//     <IconButton >
+//       <NavigateBeforeIcon className="nav-before" />
+//     </IconButton>
+//     <div className="nav-title">Title</div>
+//     <IconButton>
+//       <NavigateNextIcon className="nav-next" />
+//     </IconButton>
+//   </div>;
+// };
+
+const NavContainer = () => {
+  return <div className="nav-container">
+    <div className="nav-before"></div>
+    <div className="nav-title">Title</div>
+    <div className="nav-after"></div>
+  </div>;
+};
+
+const CoverContainer = () => {
+  return <div className="cover-container">
+    <img src="" />
+  </div>
+}
+
+const SettingsContainer = () => {
+  return <div className="settings-container">
+    <div className="settings-play-mode"></div>
+    <div className="settings-volume"></div>
+    <div className="settings-playback-rate"></div>
+    <div className="settings-music-list"></div>
+  </div>
+}
+
+// const SettingsContainer = observer(() => {
+//   const store = React.useContext(Context);
+
+//   return <div className="settings-container">
+//     <div className="settings-play-mode">
+//       <img onClick={() => store.audio.switchPlayMode()} src={"./play-mode-switch-" + store.audio.playMode + ".png"} />
+//     </div>
+//     <div className="settings-playbackRate">
+//       <img onClick={() => store.audio.switchPlaybackRate()} src={"./playback-rate-" + store.audio.playbackRate + ".png"} />
+//     </div>
+//     <div className="settings-audio-list">
+//       <img src={"./list.png"} />
+//     </div>
+//   </div>;
+// });
+
+const ProgressContainer = () => {
+  return <div className="progress-bar-container"></div>
+}
+
+const ControlContainer = () => {
+  return <div className="control-container">
+    <div className="skip-pre"></div>
+    <div className="seek-backward"></div>
+    <div className="play-pause"></div>
+    <div className="seek-forward"></div>
+    <div className="skip-next"></div>
+  </div>
+}
+
+// const ControlContainer = observer(() => {
+//   const store = React.useContext(Context);
+//   return <div className="control-container">
+//     <IconButton onClick={() => store.data.prevItem()}>
+//       <SkipPreviousRoundedIcon className="skip-pre-audio" />
+//     </IconButton>
+//     <div className="seek-backward-contaienr">
+//       <img src="./btn-seek-backward.png" onClick={() => store.audio.moveBackwardBy(15)} />
+//     </div>
+//     {
+//       store.audio.playing ?
+//         <div className="pause-container">
+//           <img src="./btn-pause.png" onClick={() => store.audio.pause()} />
+//         </div>
+//         :
+//         <div className="play-container">
+//           <img src="./btn-play.png" onClick={() => store.audio.play()} />
+//         </div>
+//     }
+//     <div className="seek-forward-contaienr">
+//       <img src="./btn-seek-forward.png" onClick={() => store.audio.moveForwardBy(15)} />
+//     </div>
+//     <IconButton onClick={() => store.data.nextItem()}>
+//       <SkipNextRoundedIcon className="skip-next-audio" />
+//     </IconButton>
+//   </div>;
+
+// });
 
 const App = observer(() => {
   const store = React.useContext(Context);
   return (
     <>
-      <Top />
-      {store.route.currentPage === PAGE.CARD && <CardContainer />}
+      <NavContainer />
+      <CoverContainer />
+      <SettingsContainer />
+      <ProgressContainer />
+      <ControlContainer />
+
+
+      {/* <TopContainer /> */}
+      {/* <AudioContainer /> */}
+      {/* {store.route.currentPage === PAGE.CARD && <CardContainer />}
       {store.route.currentPage === PAGE.ITEM && <ItemContainer />}
-      {store.route.currentPage === PAGE.AUDIO && <AudioContainer />}
+      {store.route.currentPage === PAGE.AUDIO && } */}
+      {/* <div className="visual-container"></div> */}
+      {/* <SettingsContainer /> */}
+      {/* <div className="progress-bar-container"></div> */}
+      {/* <ControlContainer /> */}
+    {/* <iframe id="iframe" src="https://mp.zhizhuma.com/book.htm?id=18896"></iframe> */}
     </>
   );
 });

@@ -1,9 +1,11 @@
 import { nanoid } from 'nanoid';
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, observable } from "mobx";
 
 export default class DataStore {
   constructor(rootStore) {
-    makeAutoObservable(this);
+    makeAutoObservable(this, {
+      currentItem: observable.ref
+    });
     this.rootStore = rootStore;
     this.initRawData();
   }
@@ -13,7 +15,7 @@ export default class DataStore {
     this.rawData = d;
   }
   async initRawData() {
-    const res = await fetch("n2-audio.json");
+    const res = await fetch("data.json");
     const d = await res.json();
     this.setRawData(d);
   }
@@ -36,10 +38,35 @@ export default class DataStore {
       title: item.title
     }));
   }
-  currentItem;
-  setCurrentItem(item) {
+  currentItem = {};
+  async setCurrentItem(item) {
     this.currentItem = item;
-    this.rootStore.audio.init(item.src);
+    await this.rootStore.audio.init(item.src);
+  }
+  async nextItem() {
+    if (!this.currentItem) return;
+    const currentIndex = this.currentItemList.findIndex(item => item.title === this.currentItem.title);
+    if (currentIndex === -1) return;
+    if (currentIndex === (this.currentItemList.length - 1)) {
+      await this.setCurrentItem(this.currentItemList[0]);
+    } else {
+      await this.setCurrentItem(this.currentItemList[currentIndex + 1]);
+    }
+  }
+  async prevItem() {
+    if (!this.currentItem) return;
+    const currentIndex = this.currentItemList.findIndex(item => item.title === this.currentItem.title);
+    if (currentIndex === -1) return;
+    if (currentIndex === 0) {
+      await this.setCurrentItem(this.currentItemList[this.currentItemList.length - 1]);
+    } else {
+      await this.setCurrentItem(this.currentItemList[currentIndex - 1]);
+    }
+  }
+  async shuffleItem() {
+    if (!this.currentItem) return;
+    const randomIdx = parseInt(Math.random() * this.currentItemList.length);
+    await this.setCurrentItem(this.currentItemList[randomIdx]);
   }
 
   itemData = [];

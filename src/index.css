@@ -1,67 +1,97 @@
+
 body {
   margin: 0;
   min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  /* align-items: center; */
-  background-color: cornsilk;
+  background-color: lightblue;
 }
 
 #root {
-  width: 100%;
+  width: 360px;
   height: 100%;
-  max-width: 360px;
+  min-height: 100vh;
+  background-color: white;
+  /* padding-top: 48px; */
 }
 
-.top {
-  position: relative;
-  width: 100%;
+.top_container {
+  /* position: fixed;
+  top: 0;
+  left: 0; */
+  width: 360px;
   height: 48px;
-  border-bottom: 1px black dotted;
+  /* border-bottom: 1px black solid; */
+  background-color: rgb(231, 240, 150);
+  padding-bottom: 3px;
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  align-items: center;
 }
 
-.route_up {
-  position: absolute;
-  width: 48px;
-  height: 24px;
-  top: 12px;
-  left: 0;
-}
-
-.route_down {
-  position: absolute;
-  width: 48px;
-  height: 24px;
-  top: 12px;
-  right: 0;
+.card_container {
+  min-height: 100vw;
+  background-color: white;
 }
 
 .cards {
   width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  /* background-color: brown; */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-items: center;
 }
 
 .card {
   width: 96px;
-  height: 96px;
-  margin: 3px;
-  background-color: darkcyan;
-  color: white;
+  height: 72px;
+  margin: 12px;
+  padding-left: 12px;
+  padding-right: 12px;
+  /* margin: 12px; */
+  background-color: rgb(231, 240, 150);
+  /* color: white; */
+  border-radius: 3px;
+  font-size: 12px;
   display: flex;
   justify-content: center;
   align-items: center;
   user-select: none;
 }
 
-.items {}
+.item_container {
+  background-color: white;
+}
 
 .item {
   width: 100%;
   height: 36px;
-  background-color: whitesmoke;
   margin-top: 2px;
   margin-bottom: 2px;
+}
+
+.audio_container {
+  background-color: white;
+}
+
+.audio_container>* {
+  margin-top: 20px;
+}
+
+.audio_card_name {
+  text-align: center;
+}
+
+.audio_item_name {
+  text-align: center;
+}
+
+img {
+  width: 100%;
+}
+
+.control {
+  height: 64px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  justify-content: center;
+  align-items: center;
 }

@@ -1,0 +1,41 @@
+
+
+pages
+  main page 
+  audio play page
+  audio list page 
+
+
+audio play page
+  top navigation include title(audio name etc.)
+  visual frequent bin
+  settings: playMode/playbackRate/choose(go to audio list popup)
+  progress bar
+  control: pre/15s-back/play-pause/15s-forward/next
+
+
+改变思路
+  一个通用型的音频 H5 播放器，不仅仅是日语，只要通过数据替换就可以直接启动
+
+首先是数据
+  一个 json 格式即可
+
+1. 书籍列表选择页面
+2. 播放页面
+3. 音乐选择页
+
+播放页面，从上到下
+1. 导航，返回图书
+2. 当前音乐标题
+3. 书籍图片
+4. 控制选项 循环模式 下载按钮 倍速播放 音乐选择页面弹出按钮
+5. 进度条
+6. 控制选项 上一首 后退15s 播放/暂停 前进15s 下一首
+
+
+
+
+https://mp.zhizhuma.com/share/audio.htm?rid=1704032&sign=c9eb0a&bid=18896&cid=7454663&share_=46550124
+
+
+https://mp.zhizhuma.com/qr.html?crcode=110000000F00000000000002P76Y13F3&sh=sh&vt_=1623327852964&_loginTime=1623327855700&share_=46550124
