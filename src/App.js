@@ -174,6 +174,9 @@ document.addEventListener('touchmove', function (event) {
   event.preventDefault();
 }, { passive: false });
 
+let vh = window.innerHeight * 0.01;
+document.documentElement.style.setProperty('--vh', `${vh}px`);
+
 const App = observer(() => {
   const store = React.useContext(Context);
   return (
