@@ -7,7 +7,6 @@ import CardContainer from "./components/CardContainer";
 import ItemContainer from "./components/ItemContainer";
 import TopContainer from "./components/TopContainer";
 
-
 import IconButton from '@material-ui/core/IconButton';
 
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
@@ -170,6 +169,10 @@ const ControlContainer = () => {
 //   </div>;
 
 // });
+
+document.addEventListener('touchmove', function (event) {
+  event.preventDefault();
+}, { passive: false });
 
 const App = observer(() => {
   const store = React.useContext(Context);
