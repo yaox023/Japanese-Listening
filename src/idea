@@ -33,7 +33,8 @@ audio play page
 6. 控制选项 上一首 后退15s 播放/暂停 前进15s 下一首
 
 
-
+- 不应该能上下滑动
+- 到手机浏览器中，高度高于可见区域（应该是被顶部url来撑大了）
 
 https://mp.zhizhuma.com/share/audio.htm?rid=1704032&sign=c9eb0a&bid=18896&cid=7454663&share_=46550124
 

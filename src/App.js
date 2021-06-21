@@ -9,11 +9,28 @@ import TopContainer from "./components/TopContainer";
 
 
 import IconButton from '@material-ui/core/IconButton';
+
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 
-import SkipNextRoundedIcon from '@material-ui/icons/SkipNextRounded';
-import SkipPreviousRoundedIcon from '@material-ui/icons/SkipPreviousRounded';
+import SkipNextIcon from '@material-ui/icons/SkipNext';
+import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import PauseIcon from '@material-ui/icons/Pause';
+import Replay10Icon from '@material-ui/icons/Replay10';
+import Forward10Icon from '@material-ui/icons/Forward10';
+
+import RepeatIcon from '@material-ui/icons/Repeat';
+import RepeatOneIcon from '@material-ui/icons/RepeatOne';
+
+import ListIcon from '@material-ui/icons/List';
+
+import LinearProgress from '@material-ui/core/LinearProgress';
+
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+
+
 // import IconButton from '@material-ui/core/IconButton';
 
 // const NavContainer = () => {
@@ -30,26 +47,48 @@ import SkipPreviousRoundedIcon from '@material-ui/icons/SkipPreviousRounded';
 
 const NavContainer = () => {
   return <div className="nav-container">
-    <div className="nav-before"></div>
+    <div className="nav-before">
+      <IconButton>
+        <NavigateBeforeIcon fontSize="large" />
+      </IconButton>
+    </div>
     <div className="nav-title">Title</div>
-    <div className="nav-after"></div>
+    <div className="nav-after">
+      <IconButton>
+        <NavigateNextIcon fontSize="large" />
+      </IconButton>
+    </div>
   </div>;
 };
 
 const CoverContainer = () => {
   return <div className="cover-container">
-    <img src="" />
-  </div>
-}
+    <img src="https://cdn10.bookln.cn/178903_75BD1F56066B341DFAAEE11B44744A94.jpg?imageView2/0/w/312/h/462" />
+  </div>;
+};
 
 const SettingsContainer = () => {
   return <div className="settings-container">
-    <div className="settings-play-mode"></div>
-    <div className="settings-volume"></div>
-    <div className="settings-playback-rate"></div>
-    <div className="settings-music-list"></div>
-  </div>
-}
+    <div className="settings-play-mode">
+      <IconButton>
+        <RepeatIcon fontSize="large" />
+      </IconButton>
+    </div>
+    <div className="settings-favorite">
+      <IconButton>
+        <FavoriteBorderIcon fontSize="large" />
+      </IconButton>
+    </div>
+    <div className="settings-playback-rate">
+      1.5x
+    </div>
+    <div className="settings-music-list">
+      <IconButton >
+        <ListIcon fontSize="large" />
+      </IconButton>
+    </div>
+  </div>;
+};
 
 // const SettingsContainer = observer(() => {
 //   const store = React.useContext(Context);
@@ -68,18 +107,40 @@ const SettingsContainer = () => {
 // });
 
 const ProgressContainer = () => {
-  return <div className="progress-bar-container"></div>
-}
+  return <div className="progress-bar-container">
+    <LinearProgress variant="determinate" value={90} />
+  </div>;
+};
 
 const ControlContainer = () => {
   return <div className="control-container">
-    <div className="skip-pre"></div>
-    <div className="seek-backward"></div>
-    <div className="play-pause"></div>
-    <div className="seek-forward"></div>
-    <div className="skip-next"></div>
-  </div>
-}
+    <div className="skip-pre">
+      <IconButton>
+        <SkipPreviousIcon fontSize="large" />
+      </IconButton>
+    </div>
+    <div className="seek-backward">
+      <IconButton>
+        <Replay10Icon fontSize="large" />
+      </IconButton>
+    </div>
+    <div className="play-pause">
+      <IconButton>
+        <PlayArrowIcon fontSize="large" />
+      </IconButton>
+    </div>
+    <div className="seek-forward">
+      <IconButton>
+        <Forward10Icon fontSize="large" />
+      </IconButton>
+    </div>
+    <div className="skip-next">
+      <IconButton>
+        <SkipNextIcon fontSize="large" />
+      </IconButton>
+    </div>
+  </div>;
+};
 
 // const ControlContainer = observer(() => {
 //   const store = React.useContext(Context);
@@ -130,7 +191,7 @@ const App = observer(() => {
       {/* <SettingsContainer /> */}
       {/* <div className="progress-bar-container"></div> */}
       {/* <ControlContainer /> */}
-    {/* <iframe id="iframe" src="https://mp.zhizhuma.com/book.htm?id=18896"></iframe> */}
+      {/* <iframe id="iframe" src="https://mp.zhizhuma.com/book.htm?id=18896"></iframe> */}
     </>
   );
 });

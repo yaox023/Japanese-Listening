@@ -3,6 +3,12 @@
 body {
   margin: 0;
   background-color: lightblue;
+
+  
+}
+
+* {
+  box-sizing: border-box;
 }
 
 #root {
@@ -21,8 +27,6 @@ body {
 }
 
 .nav-container {
-  background-color: lightgray;
-
   height: var(--nav-h);
   font-size: 16px;
 
@@ -33,84 +37,107 @@ body {
 }
 
 .nav-before {
-  background-color: black;
   width: 100%;
   height: 100%;
+
+  display: flex;
+  justify-content: flex-end;
 }
 
 .nav-after {
-  background-color: black;
   width: 100%;
   height: 100%;
+
+  display: flex;
+  justify-content: flex-start;
 }
 
 .cover-container {
-  background-color: rgb(96, 238, 103);
-
   width: 100%;
   height: calc(100% - var(--nav-h) - var(--settings-h) - var(--progress-bar-h) - var(--control-h));
   max-height: calc(720px - var(--nav-h) - var(--settings-h) - var(--progress-bar-h) - var(--control-h));
+
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  
 }
 
 .settings-container {
-  background-color: cornflowerblue;
+  /* background-color: cornflowerblue; */
 
   width: 100%;
   height: var(--settings-h);
 
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
+  align-items: center;
+  justify-items: center;
 }
 
 .settings-play-mode {
-  background-color: rgb(241, 190, 233);
+  /* background-color: rgb(241, 190, 233); */
 }
 
-.settings-volume {
-  background-color: rgb(241, 200, 233);
+.settings-favorite {
+  /* background-color: rgb(241, 200, 233); */
 }
 
 .settings-playback-rate {
-  background-color: rgb(241, 210, 233);
+  /* background-color: rgb(241, 210, 233); */
 }
 
 .settings-music-list {
-  background-color: rgb(241, 220, 233);
+  /* background-color: rgb(241, 220, 233); */
 }
 
 .progress-bar-container {
-  background-color: cornflowerblue;
-
   width: 100%;
   height: var(--progress-bar-h);
+
+  padding-top: 30px;
+
+  /* display: flex; */
+  /* align-items: center; */
+  /* justify-content: center; */
 }
 
 .control-container {
-  background-color: cadetblue;
-
   width: 100%;
   height: var(--control-h);
 
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  align-items: center;
+  justify-items: center;
 }
 
 .skip-pre {
-  background-color: rgb(252, 250, 246);
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
 }
 
 .seek-backward {
-  background-color: rgb(252, 240, 246);
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
 }
 
 .play-pause {
-  background-color: rgb(252, 230, 246);
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
 }
 
 .seek-forward {
-  background-color: rgb(252, 220, 246);
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
 }
 
 .skip-next{
-  background-color: rgb(252, 210, 246);
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
 }
