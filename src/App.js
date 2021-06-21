@@ -79,7 +79,7 @@ const SettingsContainer = () => {
       </IconButton>
     </div>
     <div className="settings-playback-rate">
-      1.5x
+      <IconButton>1.5x</IconButton>
     </div>
     <div className="settings-music-list">
       <IconButton >
