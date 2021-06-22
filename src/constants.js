@@ -9,11 +9,10 @@ export const PAGE = {
 };
 
 export const PLAY_MODE = {
-  ONCE: "once",
-  LOOP: "loop",
-  ORDER: "order",
-  RANDOM: "random",
-  REPEAT: "repeat",
+  ONCE: "播放一次",
+  REPEAT: "单曲循环",
+  ORDER: "列表循环",
+  RANDOM: "随机播放",
 };
 
 export const STATUS = {

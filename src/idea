@@ -19,6 +19,7 @@ audio play page
 
 首先是数据
   一个 json 格式即可
+  json 文件的格式见 template.json
 
 1. 书籍列表选择页面
 2. 播放页面
@@ -40,3 +41,9 @@ https://mp.zhizhuma.com/share/audio.htm?rid=1704032&sign=c9eb0a&bid=18896&cid=74
 
 
 https://mp.zhizhuma.com/qr.html?crcode=110000000F00000000000002P76Y13F3&sh=sh&vt_=1623327852964&_loginTime=1623327855700&share_=46550124
+
+https://css-tricks.com/lets-create-a-custom-audio-player/
+
+图片需要同比例拉长
+
+

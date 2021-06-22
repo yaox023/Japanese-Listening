@@ -2,10 +2,10 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { Context, PAGE } from "./constants";
 
-import AudioContainer from "./components/AudioContainer";
-import CardContainer from "./components/CardContainer";
-import ItemContainer from "./components/ItemContainer";
-import TopContainer from "./components/TopContainer";
+// import AudioContainer from "./components/AudioContainer";
+// import CardContainer from "./components/CardContainer";
+// import ItemContainer from "./components/ItemContainer";
+// import TopContainer from "./components/TopContainer";
 
 import IconButton from '@material-ui/core/IconButton';
 
@@ -19,8 +19,8 @@ import PauseIcon from '@material-ui/icons/Pause';
 import Replay10Icon from '@material-ui/icons/Replay10';
 import Forward10Icon from '@material-ui/icons/Forward10';
 
-import RepeatIcon from '@material-ui/icons/Repeat';
-import RepeatOneIcon from '@material-ui/icons/RepeatOne';
+// import RepeatIcon from '@material-ui/icons/Repeat';
+// import RepeatOneIcon from '@material-ui/icons/RepeatOne';
 
 import ListIcon from '@material-ui/icons/List';
 
@@ -29,48 +29,36 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 
-
-// import IconButton from '@material-ui/core/IconButton';
-
-// const NavContainer = () => {
-//   return <div className="nav-container">
-//     <IconButton >
-//       <NavigateBeforeIcon className="nav-before" />
-//     </IconButton>
-//     <div className="nav-title">Title</div>
-//     <IconButton>
-//       <NavigateNextIcon className="nav-next" />
-//     </IconButton>
-//   </div>;
-// };
-
-const NavContainer = () => {
+const NavContainer = observer(() => {
+  const store = React.useContext(Context);
   return <div className="nav-container">
     <div className="nav-before">
       <IconButton>
         <NavigateBeforeIcon fontSize="large" />
       </IconButton>
     </div>
-    <div className="nav-title">Title</div>
+    <div className="nav-title">{store.audio.curAudio.title}</div>
     <div className="nav-after">
       <IconButton>
         <NavigateNextIcon fontSize="large" />
       </IconButton>
     </div>
   </div>;
-};
+});
 
-const CoverContainer = () => {
+const CoverContainer = observer(() => {
+  const store = React.useContext(Context);
   return <div className="cover-container">
-    <img src="https://cdn10.bookln.cn/178903_75BD1F56066B341DFAAEE11B44744A94.jpg?imageView2/0/w/312/h/462" />
+    <img src={store.audio.curBook.image} />
   </div>;
-};
+});
 
-const SettingsContainer = () => {
+const SettingsContainer = observer(() => {
+  const store = React.useContext(Context);
   return <div className="settings-container">
     <div className="settings-play-mode">
-      <IconButton>
-        <RepeatIcon fontSize="large" />
+      <IconButton onClick={store.audio.togglePlayMode}>
+        {store.audio.playMode.slice(0, 2)}<br />{store.audio.playMode.slice(2)}
       </IconButton>
     </div>
     <div className="settings-favorite">
@@ -79,7 +67,7 @@ const SettingsContainer = () => {
       </IconButton>
     </div>
     <div className="settings-playback-rate">
-      <IconButton>1.5x</IconButton>
+      <IconButton onClick={store.audio.togglePlaybackRate}>{`${store.audio.playbackRate}x`}</IconButton>
     </div>
     <div className="settings-music-list">
       <IconButton >
@@ -87,59 +75,53 @@ const SettingsContainer = () => {
       </IconButton>
     </div>
   </div>;
-};
+});
 
-// const SettingsContainer = observer(() => {
-//   const store = React.useContext(Context);
-
-//   return <div className="settings-container">
-//     <div className="settings-play-mode">
-//       <img onClick={() => store.audio.switchPlayMode()} src={"./play-mode-switch-" + store.audio.playMode + ".png"} />
-//     </div>
-//     <div className="settings-playbackRate">
-//       <img onClick={() => store.audio.switchPlaybackRate()} src={"./playback-rate-" + store.audio.playbackRate + ".png"} />
-//     </div>
-//     <div className="settings-audio-list">
-//       <img src={"./list.png"} />
-//     </div>
-//   </div>;
-// });
-
-const ProgressContainer = () => {
+const ProgressContainer = observer(() => {
+  const store = React.useContext(Context);
   return <div className="progress-bar-container">
-    <LinearProgress variant="determinate" value={90} />
+    <LinearProgress variant="determinate" value={ store.audio.curTimeRate } />
   </div>;
-};
+});
 
-const ControlContainer = () => {
+const ControlContainer = observer(() => {
+  const store = React.useContext(Context);
+
   return <div className="control-container">
     <div className="skip-pre">
-      <IconButton>
+      <IconButton onClick={store.audio.prevAudio}>
         <SkipPreviousIcon fontSize="large" />
       </IconButton>
     </div>
     <div className="seek-backward">
-      <IconButton>
+      <IconButton onClick={store.audio.backward}>
         <Replay10Icon fontSize="large" />
       </IconButton>
     </div>
     <div className="play-pause">
-      <IconButton>
-        <PlayArrowIcon fontSize="large" />
-      </IconButton>
+      {
+        store.audio.isPlaying ?
+          <IconButton onClick={store.audio.pause}>
+            <PauseIcon fontSize="large" />
+          </IconButton>
+          :
+          <IconButton onClick={store.audio.play}>
+            <PlayArrowIcon fontSize="large" />
+          </IconButton>
+      }
     </div>
     <div className="seek-forward">
-      <IconButton>
+      <IconButton onClick={store.audio.forward}>
         <Forward10Icon fontSize="large" />
       </IconButton>
     </div>
     <div className="skip-next">
-      <IconButton>
+      <IconButton onClick={store.audio.nextAudio}>
         <SkipNextIcon fontSize="large" />
       </IconButton>
     </div>
   </div>;
-};
+});
 
 // const ControlContainer = observer(() => {
 //   const store = React.useContext(Context);
@@ -174,8 +156,8 @@ document.addEventListener('touchmove', function (event) {
   event.preventDefault();
 }, { passive: false });
 
-let vh = window.innerHeight * 0.01;
-document.documentElement.style.setProperty('--vh', `${vh}px`);
+let vh = window.innerHeight * 0.01;
+document.documentElement.style.setProperty('--vh', `${vh}px`);
 
 const App = observer(() => {
   const store = React.useContext(Context);
