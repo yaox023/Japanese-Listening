@@ -62,7 +62,7 @@ export default class AudioStore {
     this.audioElement.addEventListener("pause", () => {
       this.updateIsPlaying();
     });
-    this.audioElement.addEventListener("ended", () => {
+    this.audioElement.addEventListener("ended", async () => {
       this.updateIsPlaying();
 
       switch (this.playMode) {
@@ -70,12 +70,12 @@ export default class AudioStore {
           this.play();
           break;
         case PLAY_MODE.ORDER:
-          this.nextAudio();
+          await this.nextAudio();
           this.play();
           break;
         case PLAY_MODE.RANDOM:
           const idx = parseInt(Math.random() * this.curBook.content.length);
-          this.setCurAudioIdx(idx);
+          await this.setCurAudioIdx(idx);
           this.play();
           break;
         default:
@@ -94,6 +94,9 @@ export default class AudioStore {
       this.setCurTime(0);
       this.setDuration(this.audioElement.duration);
     });
+
+    // 初始化第一个 audio
+    this.setCurAudioIdx(0);
   }
 
   get curBook() {
@@ -102,16 +105,23 @@ export default class AudioStore {
 
   get curAudio() {
     const audio = this.curBook && this.curBook.content[this.curAudioIdx];
-    if (audio) {
-      this.pause();
-      fetch(audio.url)
-        .then(res => res.blob())
-        .then(blob => URL.createObjectURL(blob))
-        .then(src => {
-          this.audioElement.src = src;
-        });
-    }
+    // if (audio) {
+    //   this.pause();
+    //   fetch(audio.url)
+    //     .then(res => res.blob())
+    //     .then(blob => URL.createObjectURL(blob))
+    //     .then(src => {
+    //       this.audioElement.src = src;
+    //     });
+    // }
     return audio;
+  }
+
+  async fetchAudio() {
+    const res = await fetch(this.curAudio.url);
+    const blob = await res.blob();
+    const src = URL.createObjectURL(blob);
+    this.audioElement.src = src;
   }
 
   // 当前播放的时长比例
@@ -124,8 +134,10 @@ export default class AudioStore {
     this.curBookIdx = idx;
   }
 
-  setCurAudioIdx(idx) {
+  async setCurAudioIdx(idx) {
     this.curAudioIdx = idx;
+    await this.fetchAudio();
+    this.updateIsPlaying();
   }
 
   setCurTime(time) {
@@ -136,13 +148,13 @@ export default class AudioStore {
     this.duration = duration;
   }
 
-  nextAudio() {
+  async nextAudio() {
     if (this.curAudioIdx + 1 < this.curBook.content.length) {
       this.setCurAudioIdx(this.curAudioIdx + 1);
     }
   }
 
-  prevAudio() {
+  async prevAudio() {
     if (this.curAudioIdx - 1 >= 0) {
       this.setCurAudioIdx(this.curAudioIdx - 1);
     }
@@ -153,7 +165,7 @@ export default class AudioStore {
   }
 
   play() {
-    this.audioElement.play();
+    setTimeout(() => this.audioElement.play(), 100);
   }
 
   pause() {
