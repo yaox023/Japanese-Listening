@@ -1,0 +1,39 @@
+
+.book-list-page {
+  padding: 12px 0 12px 12px;
+
+  overflow-y: scroll;
+  background-color: white;
+
+  --book-item-h: 42px;
+
+}
+
+.book-item-container {
+  width: 100%;
+  height: var(--book-item-h);
+  margin: 6px 0 6px 0;
+
+  display: flex;
+  align-items: center;
+}
+
+.book-item-container:hover {
+  cursor: pointer;
+}
+
+.book-item-image {
+  width: calc(var(--book-item-h) - 6px);
+  height: calc(var(--book-item-h) - 6px);
+  display: flex;
+  align-items: center;
+
+  margin-right: 16px;
+
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.book-item-image > img {
+  width: 100%;
+}

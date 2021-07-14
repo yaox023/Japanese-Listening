@@ -2,9 +2,6 @@
 
 body {
   margin: 0;
-  background-color: lightblue;
-
-  
 }
 
 * {
@@ -12,134 +9,14 @@ body {
 }
 
 #root {
-  /* background-color: rgb(196, 196, 196); */
   width: 100%;
   max-width: 425px;
   height: 100vh;
   height: calc(var(--vh, 1vh) * 100);
   margin: 0 auto;
-
+  position: relative;
   background-color: white;
+  box-sizing: border-box;
 
   --nav-h: 60px;
-  --settings-h: 90px;
-  --progress-bar-h: 60px;
-  --control-h: 90px;
-}
-
-.nav-container {
-  height: var(--nav-h);
-  font-size: 16px;
-
-  display: grid;
-  grid-template-columns: 64px auto 64px;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.nav-before {
-  width: 100%;
-  height: 100%;
-
-  display: flex;
-  justify-content: flex-end;
-}
-
-.nav-after {
-  width: 100%;
-  height: 100%;
-
-  display: flex;
-  justify-content: flex-start;
-}
-
-.cover-container {
-  width: 100%;
-  height: calc(100% - var(--nav-h) - var(--settings-h) - var(--progress-bar-h) - var(--control-h));
-  max-height: calc(720px - var(--nav-h) - var(--settings-h) - var(--progress-bar-h) - var(--control-h));
-
-  display: flex;
-  justify-content: center;
-  align-items: stretch;
-  
-}
-
-.settings-container {
-  /* background-color: cornflowerblue; */
-
-  width: 100%;
-  height: var(--settings-h);
-
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  align-items: center;
-  justify-items: center;
-}
-
-.settings-play-mode {
-  font-size: 6px!important;
-  /* background-color: rgb(241, 190, 233); */
-}
-
-.settings-favorite {
-  /* background-color: rgb(241, 200, 233); */
-}
-
-.settings-playback-rate {
-  /* background-color: rgb(241, 210, 233); */
-}
-
-.settings-music-list {
-  /* background-color: rgb(241, 220, 233); */
-}
-
-.progress-bar-container {
-  width: 100%;
-  height: var(--progress-bar-h);
-
-  padding-top: 30px;
-
-  /* display: flex; */
-  /* align-items: center; */
-  /* justify-content: center; */
-}
-
-.control-container {
-  width: 100%;
-  height: var(--control-h);
-
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  align-items: center;
-  justify-items: center;
-}
-
-.skip-pre {
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
-}
-
-.seek-backward {
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
-}
-
-.play-pause {
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
-}
-
-.seek-forward {
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
-}
-
-.skip-next{
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
 }

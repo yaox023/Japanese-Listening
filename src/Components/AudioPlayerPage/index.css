@@ -1,0 +1,57 @@
+.audio-player-page {
+  --settings-h: 75px;
+  --progress-bar-h: 36px;
+  --control-h: 90px;
+}
+
+.cover-container {
+  width: 100%;
+  height: calc(
+    100% - var(--nav-h) - var(--settings-h) - var(--progress-bar-h) -
+      var(--control-h)
+  );
+  max-height: calc(
+    720px - var(--nav-h) - var(--settings-h) - var(--progress-bar-h) -
+      var(--control-h)
+  );
+
+  display: grid;
+  grid-template-rows: 36px auto;
+  justify-content: center;
+  align-items: stretch;
+
+  margin-bottom: 12px;
+}
+
+.settings-container {
+  /* background-color: cornflowerblue; */
+
+  width: 100%;
+  height: var(--settings-h);
+
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  align-items: center;
+  justify-items: center;
+}
+
+.settings-play-mode {
+  font-size: 12px;
+  /* background-color: rgb(241, 190, 233); */
+}
+
+.progress-bar-container {
+  width: 100%;
+  height: var(--progress-bar-h);
+  padding-top: 24px;
+}
+
+.control-container {
+  width: 100%;
+  height: var(--control-h);
+
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  align-items: center;
+  justify-items: center;
+}

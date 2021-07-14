@@ -1,110 +1,128 @@
-import { makeObservable, runInAction, observable, action, computed } from "mobx";
-import { PLAY_MODE } from "../constants";
-const d = require('../template.json');
+import { makeObservable, observable, action, computed } from 'mobx'
+import { PLAY_MODE, PAGE } from './constants'
 
-export default class AudioStore {
-  isPlaying = false; // 当前是否正在播放
-  playbackRate = 1.0; // 播放速度
-  playMode = PLAY_MODE.ONCE; // 播放模式
-  audioElement; // audio 元素
-  data = d; // 所有的数据 TODO: 先请求所有数据，后续考虑分书来请求存储
-  curBookIdx = 0; // 当前播放的图书，对应于 data 的外层数组下标
-  curAudioIdx = 0; // 当前播放的音乐，对应于 data 的内层数组下标
-  curTime = 0; // 当前播放时间
-  duration = 0; // 当前音频总时长
+class Store {
+  curPage = PAGE.BookListPage // 当前页面
+  isPlaying = false // 当前是否正在播放
+  playbackRate = 1.0 // 播放速度
+  playMode = PLAY_MODE.ONCE // 播放模式
+  audioElement // audio 元素
+  data = [] // 所有的数据 TODO: 先请求所有数据，后续考虑分书来请求存储
+  curBookIdx = 0 // 当前播放的图书，对应于 data 的外层数组下标
+  curAudioIdx = 0 // 当前播放的音乐，对应于 data 的内层数组下标
+  curTime = 0 // 当前播放时间
+  duration = 0 // 当前音频总时长
 
-  constructor(rootStore) {
-    this.rootStore = rootStore;
+  constructor() {
+    this.play = this.play.bind(this)
+    this.pause = this.pause.bind(this)
+    this.togglePlaybackRate = this.togglePlaybackRate.bind(this)
+    this.togglePlayMode = this.togglePlayMode.bind(this)
+    this.forward = this.forward.bind(this)
+    this.backward = this.backward.bind(this)
+    this.nextAudio = this.nextAudio.bind(this)
+    this.prevAudio = this.prevAudio.bind(this)
 
-    this.play = this.play.bind(this);
-    this.pause = this.pause.bind(this);
-    this.togglePlaybackRate = this.togglePlaybackRate.bind(this);
-    this.togglePlayMode = this.togglePlayMode.bind(this);
-    this.forward = this.forward.bind(this);
-    this.backward = this.backward.bind(this);
-    this.nextAudio = this.nextAudio.bind(this);
-    this.prevAudio = this.prevAudio.bind(this);
+    this.showAudioListPage = this.showAudioListPage.bind(this)
+    this.showAudioPlayerPage = this.showAudioPlayerPage.bind(this)
+    this.showBookListPage = this.showBookListPage.bind(this)
 
     makeObservable(this, {
+      data: observable,
+      setData: action,
+
       isPlaying: observable,
       updateIsPlaying: action,
+
       playbackRate: observable,
       togglePlaybackRate: action,
+
       playMode: observable,
       togglePlayMode: action,
+
       curBookIdx: observable,
       curBook: computed,
       setCurBookIdx: action,
+
       curAudioIdx: observable,
       curAudio: computed,
       setCurAudioIdx: action,
+
       curTime: observable,
       setCurTime: action,
-      duration: observable,
-      setDuration: action,
-      curTimeRate: computed,
-    });
 
-    // this.initData();
-    this.initAudioElement();
+      duration: observable,
+      curTimeRate: computed,
+      setDuration: action,
+
+      curPage: observable,
+      showAudioListPage: action,
+      showBookListPage: action,
+      showAudioPlayerPage: action,
+    })
+
+    fetch('./data.json')
+      .then(res => res.json())
+      .then(data => this.setData(data))
+      .then(() => this.initAudioElement())
+      .catch(err => console.error(console.error(err)))
   }
 
-  async initData() {
-    const res = await fetch("data.json");
-    this.data = await res.json();
+  setData(data) {
+    this.data = data;
   }
 
   initAudioElement() {
-    this.audioElement = new Audio();
-    this.audioElement.addEventListener("play", () => {
-      this.updateIsPlaying();
-    });
-    this.audioElement.addEventListener("pause", () => {
-      this.updateIsPlaying();
-    });
-    this.audioElement.addEventListener("ended", async () => {
-      this.updateIsPlaying();
+    this.audioElement = new Audio()
+    this.audioElement.addEventListener('play', () => {
+      this.updateIsPlaying()
+    })
+    this.audioElement.addEventListener('pause', () => {
+      this.updateIsPlaying()
+    })
+    this.audioElement.addEventListener('ended', async () => {
+      this.updateIsPlaying()
 
       switch (this.playMode) {
         case PLAY_MODE.REPEAT:
-          this.play();
-          break;
+          this.play()
+          break
         case PLAY_MODE.ORDER:
-          await this.nextAudio();
-          this.play();
-          break;
+          await this.nextAudio()
+          this.play()
+          break
         case PLAY_MODE.RANDOM:
-          const idx = parseInt(Math.random() * this.curBook.content.length);
-          await this.setCurAudioIdx(idx);
-          this.play();
-          break;
+          const idx = parseInt(Math.random() * this.curBook.content.length)
+          await this.setCurAudioIdx(idx)
+          this.play()
+          break
         default:
-          break;
+          break
       }
-    });
-    this.audioElement.addEventListener("timeupdate", () => {
+    })
+    this.audioElement.addEventListener('timeupdate', () => {
       if (this.audioElement.currentTime) {
-        this.setCurTime(this.audioElement.currentTime);
+        this.setCurTime(this.audioElement.currentTime)
       }
       if (this.audioElement.duration) {
-        this.setDuration(this.audioElement.duration);
+        this.setDuration(this.audioElement.duration)
       }
-    });
-    this.audioElement.addEventListener("durationchange", () => {
-      this.setCurTime(0);
-      this.setDuration(this.audioElement.duration);
-    });
+    })
+    this.audioElement.addEventListener('durationchange', () => {
+      this.setCurTime(0)
+      this.setDuration(this.audioElement.duration)
+    })
 
     // 初始化第一个 audio
-    this.setCurAudioIdx(0);
+    this.setCurAudioIdx(0)
   }
 
   get curBook() {
-    return this.data[this.curBookIdx];
+    return this.data[this.curBookIdx]
   }
 
   get curAudio() {
-    const audio = this.curBook && this.curBook.content[this.curAudioIdx];
+    const audio = this.curBook && this.curBook.content[this.curAudioIdx]
     // if (audio) {
     //   this.pause();
     //   fetch(audio.url)
@@ -114,105 +132,117 @@ export default class AudioStore {
     //       this.audioElement.src = src;
     //     });
     // }
-    return audio;
+    return audio
   }
 
   async fetchAudio() {
-    const res = await fetch(this.curAudio.url);
-    const blob = await res.blob();
-    const src = URL.createObjectURL(blob);
-    this.audioElement.src = src;
+    const res = await fetch(this.curAudio.url)
+    const blob = await res.blob()
+    const src = URL.createObjectURL(blob)
+    this.audioElement.src = src
   }
 
   // 当前播放的时长比例
   get curTimeRate() {
-    const rate = this.duration === 0 ? 0 : this.curTime / this.duration;
-    return parseInt(rate * 100);
+    const rate = this.duration === 0 ? 0 : this.curTime / this.duration
+    return parseInt(rate * 100)
   }
 
   setCurBookIdx(idx) {
-    this.curBookIdx = idx;
+    this.curBookIdx = idx
   }
 
   async setCurAudioIdx(idx) {
-    this.curAudioIdx = idx;
-    await this.fetchAudio();
-    this.updateIsPlaying();
+    this.curAudioIdx = idx
+    await this.fetchAudio()
+    this.updateIsPlaying()
   }
 
   setCurTime(time) {
-    this.curTime = time;
+    this.curTime = time
   }
 
   setDuration(duration) {
-    this.duration = duration;
+    this.duration = duration
   }
 
   async nextAudio() {
     if (this.curAudioIdx + 1 < this.curBook.content.length) {
-      this.setCurAudioIdx(this.curAudioIdx + 1);
+      this.setCurAudioIdx(this.curAudioIdx + 1)
     }
   }
 
   async prevAudio() {
     if (this.curAudioIdx - 1 >= 0) {
-      this.setCurAudioIdx(this.curAudioIdx - 1);
+      this.setCurAudioIdx(this.curAudioIdx - 1)
     }
   }
 
   updateIsPlaying() {
-    this.isPlaying = !this.audioElement.paused;
+    this.isPlaying = !this.audioElement.paused
   }
 
   play() {
-    setTimeout(() => this.audioElement.play(), 100);
+    setTimeout(() => this.audioElement.play(), 100)
   }
 
   pause() {
-    this.audioElement.pause();
+    this.audioElement.pause()
   }
 
   forward() {
-    this.audioElement.currentTime += 10;
+    this.audioElement.currentTime += 10
   }
 
   backward() {
-    this.audioElement.currentTime -= 10;
+    this.audioElement.currentTime -= 10
   }
 
   togglePlaybackRate() {
     if (this.playbackRate === 1.0) {
-      this.playbackRate = 1.5;
+      this.playbackRate = 1.5
     } else if (this.playbackRate === 1.5) {
-      this.playbackRate = 2.0;
+      this.playbackRate = 2.0
     } else if (this.playbackRate === 2.0) {
-      this.playbackRate = 0.75;
+      this.playbackRate = 0.75
     } else if (this.playbackRate === 0.75) {
-      this.playbackRate = 1.0;
+      this.playbackRate = 1.0
     }
-    this.audioElement.playbackRate = this.playbackRate;
+    this.audioElement.playbackRate = this.playbackRate
   }
 
   togglePlayMode() {
     switch (this.playMode) {
       case PLAY_MODE.ONCE:
-        this.playMode = PLAY_MODE.REPEAT;
-        break;
+        this.playMode = PLAY_MODE.REPEAT
+        break
       case PLAY_MODE.REPEAT:
-        this.playMode = PLAY_MODE.ORDER;
-        break;
+        this.playMode = PLAY_MODE.ORDER
+        break
       case PLAY_MODE.ORDER:
-        this.playMode = PLAY_MODE.RANDOM;
-        break;
+        this.playMode = PLAY_MODE.RANDOM
+        break
       case PLAY_MODE.RANDOM:
-        this.playMode = PLAY_MODE.ONCE;
-        break;
+        this.playMode = PLAY_MODE.ONCE
+        break
       default:
-        this.playMode = PLAY_MODE.ONCE;
-        break;
+        this.playMode = PLAY_MODE.ONCE
+        break
     }
   }
+
+  showAudioListPage() {
+    this.curPage = PAGE.AudioListPage
+  }
+  showBookListPage() {
+    this.curPage = PAGE.BookListPage
+  }
+  showAudioPlayerPage() {
+    this.curPage = PAGE.AudioPlayerPage
+  }
 }
+
+export default new Store()
 
 // export default class AudioStore {
 //   constructor(rootStore) {
@@ -337,7 +367,7 @@ export default class AudioStore {
 
 //   /**
 //    * 思考一下音波具体的逻辑，如何融入 react 与 mobx
-//    * @param {} url 
+//    * @param {} url
 //    */
 
 //   async init(url) {
@@ -402,14 +432,14 @@ export default class AudioStore {
 
 //   /**
 //    * 设置播放模式
-//    * @param {PLAY_MODE} mode 模式 
+//    * @param {PLAY_MODE} mode 模式
 //    */
 //   setPlayMode(mode) {
 //     this.playMode = mode;
 //   }
 //   /**
-//    * seek 前进 
-//    * @param {number} s 正整数，前进几秒 
+//    * seek 前进
+//    * @param {number} s 正整数，前进几秒
 //    */
 //   moveForwardBy(s) {
 //     this.audioElement.currentTime += s;
@@ -478,6 +508,5 @@ export default class AudioStore {
 //     this.playbackRate = targetRate;
 //     this.audioElement.playbackRate = targetRate;
 //   }
-
 
 // }
